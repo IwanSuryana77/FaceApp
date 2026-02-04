@@ -2,8 +2,6 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
-    id("com.google.gms.google-services") 
-    id("com.google.gms.google-services") version "4.4.4" apply false 
 }
 
 android {
@@ -55,3 +53,6 @@ dependencies {
 
     // ...dst.
 }
+
+// Apply the Google services plugin from the classpath (declared in root buildscript)
+apply(plugin = "com.google.gms.google-services")
