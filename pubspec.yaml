@@ -1,0 +1,78 @@
+name: peresenceapp
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI & Utility
+
+  cupertino_icons: ^1.0.8
+  google_fonts: ^8.0.0
+  intl: ^0.20.2
+  shared_preferences: ^2.2.2
+  http: ^1.2.1
+
+  # Media & Animation
+  carousel_slider: ^5.1.1
+  flutter_svg: ^2.0.10
+  smooth_page_indicator: ^2.0.1
+  lottie: ^3.3.1
+  dotted_border: ^3.1.0
+
+  # Camera & Image
+  camera: ^0.11.3
+  image_picker: ^1.0.8
+  file_picker: ^10.3.10
+
+  # Location & Maps
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
+  google_maps_flutter: ^2.6.1
+
+  # Calendar
+  table_calendar: ^3.0.9
+
+  # Firebase
+  firebase_core: ^4.3.0
+  firebase_auth: ^6.1.3
+  cloud_firestore: ^6.1.1
+
+  # ML Kit
+  google_mlkit_face_detection: ^0.13.1
+  google_ml_kit: ^0.20.0
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.4
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/Kalender.jpg
+    - assets/images/selipgaji.jpg
+    - assets/images/daftarabsen.jpg
+    - assets/images/JamLembur.jpg
+    - assets/images/Reimbursment.jpg
+    - assets/images/FaceKamera.jpg
+    - assets/images/header.jpg
+    - assets/images/safety.jpg
+    - assets/images/work.jpg
+    - assets/images/fokus.jpg
+    - assets/images/profil.jpg
+    - assets/images/bitmap.bmp
+    - assets/images/logo.png
+    - assets/images/logo1.jpg

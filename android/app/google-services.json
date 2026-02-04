@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "760906457106",
+    "project_id": "abseninapp-3cae8",
+    "storage_bucket": "abseninapp-3cae8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760906457106:android:7dcc5e637495707e9f78cb",
+        "android_client_info": {
+          "package_name": "com.example.peresenceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiYvW1SIiwFbkZ_HpePj4EMwiixj7hv70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
+
