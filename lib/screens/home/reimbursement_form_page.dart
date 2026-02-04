@@ -112,7 +112,11 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
         'createdAt': Timestamp.now(),
         'status': 'Menunggu',
         'refCode': refCode,
-        'items': _items.map((e) => {'name': e.name, 'amount': e.amount, 'notes': e.notes ?? ''}).toList(),
+        'items': _items.map((e) => {
+          'name': e.name,
+          'amount': e.amount,
+          'notes': e.notes ?? '',
+        }).toList(),
       });
 
       if (mounted) {
@@ -125,33 +129,62 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
     setState(() => _loading = false);
   }
 
+  // Tambah item benefit pakai dialog
   void _addBenefitItem() async {
     final nameCtrl = TextEditingController();
     final amountCtrl = TextEditingController();
     final notesCtrl = TextEditingController();
+    final _dialogFormKey = GlobalKey<FormState>();
 
-    await showDialog(
+    final result = await showDialog<_BenefitItem>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Tambah Item Benefit'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'Nama')),
-            TextField(controller: amountCtrl, decoration: const InputDecoration(labelText: 'Jumlah'), keyboardType: TextInputType.number),
-            TextField(controller: notesCtrl, decoration: const InputDecoration(labelText: 'Catatan')),
-          ],
+        backgroundColor: lightGrey,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        title: const Text('Tambah Item Benefit', style: TextStyle(fontWeight: FontWeight.bold)),
+        content: Form(
+          key: _dialogFormKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: nameCtrl,
+                decoration: const InputDecoration(labelText: 'Nama'),
+                validator: (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+              ),
+              TextFormField(
+                controller: amountCtrl,
+                decoration: const InputDecoration(labelText: 'Jumlah'),
+                keyboardType: TextInputType.number,
+                validator: (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+              ),
+              TextFormField(
+                controller: notesCtrl,
+                decoration: const InputDecoration(labelText: 'Catatan'),
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Batal')),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: primaryBlue),
+            style: FilledButton.styleFrom(
+              backgroundColor: lightBlue,
+              foregroundColor: primaryBlue,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
             onPressed: () {
-              if (nameCtrl.text.isNotEmpty && int.tryParse(amountCtrl.text) != null) {
-                setState(() {
-                  _items.add(_BenefitItem(nameCtrl.text, int.parse(amountCtrl.text), notes: notesCtrl.text));
-                });
-                Navigator.pop(context);
+              if (_dialogFormKey.currentState!.validate()) {
+                String cleaned = amountCtrl.text.replaceAll('.', '').replaceAll(',', '');
+                int? amount = int.tryParse(cleaned);
+                if (amount == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Jumlah harus berupa angka")));
+                  return;
+                }
+                Navigator.pop(context, _BenefitItem(
+                  nameCtrl.text.trim(), amount, notes: notesCtrl.text.trim()));
               }
             },
             child: const Text('Tambah'),
@@ -159,6 +192,12 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
         ],
       ),
     );
+
+    if (result != null) {
+      setState(() {
+        _items.add(result);
+      });
+    }
   }
 
   @override
@@ -167,24 +206,23 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
       backgroundColor: lightGrey,
       appBar: AppBar(
         title: const Text('Pengajuan Reimbursement'),
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF3F7DF4),
         foregroundColor: Colors.black,
         elevation: 0,
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 500),
           child: Form(
             key: _formKey,
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                // Form field utama dalam Card
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical:24, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -196,13 +234,12 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                           validator: (v) => v==null ? 'Pilih kebijakan' : null,
                         ),
                         const SizedBox(height: 16),
-                        // Datepicker custom tampilan flat
                         InkWell(
                           borderRadius: BorderRadius.circular(8),
                           onTap: () async {
                             final picked = await showDatePicker(
                               context: context,
-                              initialDate: _selectedDate!,
+                              initialDate: _selectedDate ?? DateTime.now(),
                               firstDate: DateTime(2020),
                               lastDate: DateTime.now().add(const Duration(days: 366)),
                             );
@@ -216,19 +253,16 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  _selectedDate == null
-                                    ? '-' 
+                                Text(_selectedDate == null
+                                    ? '-'
                                     : DateFormat('dd MMMM yyyy', 'id_ID').format(_selectedDate!),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
+                                style: const TextStyle(fontSize: 16),),
                                 const Icon(Icons.calendar_today, size: 20, color: darkGrey),
                               ],
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        // Lampiran
                         Container(
                           margin: const EdgeInsets.only(bottom: 12),
                           child: Column(
@@ -270,13 +304,11 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                   ),
                 ),
                 const SizedBox(height: 18),
-
-                // Item benefit
                 Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical:20, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -293,7 +325,7 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                                   children: [
                                     Text(item.name, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
                                     if(item.notes != null && item.notes!.isNotEmpty)
-                                      Text(item.notes!, style: const TextStyle(color: Colors.black54, fontSize: 13),),
+                                      Text(item.notes!, style: const TextStyle(color: Colors.black54, fontSize: 13)),
                                   ],
                                 ),
                               ),
@@ -305,7 +337,7 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                                   IconButton(
                                     icon: const Icon(Icons.delete, color: Colors.red, size: 22),
                                     onPressed: () {
-                                      setState(()=> _items.remove(item));
+                                      setState(() => _items.remove(item));
                                     })
                                 ],
                               )
@@ -318,7 +350,6 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                             child: Text("Belum ada item benefit", style: TextStyle(color: Colors.grey[400])),
                           ),
                         const Divider(height: 24),
-                        // Tombol tambah item + total
                         Row(
                           children: [
                             Expanded(
@@ -351,7 +382,6 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Tombol kirim
                 SizedBox(
                   height: 48,
                   width: double.infinity,

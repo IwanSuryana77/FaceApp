@@ -82,7 +82,7 @@ class _BottomNavWrapperState extends State<BottomNavWrapper> {
 
   final List<Widget> _pages = [
     const HomeScreen(userName: '', userEmail: ''),
-    const PengajuanPage(),
+    const PengajuanCutiPage(),
     const InboxPage(),
     const ProfilePage(),
   ];
