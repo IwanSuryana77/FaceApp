@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 class AbsensiData {
   final DateTime tanggal;
@@ -15,7 +18,11 @@ class AbsensiData {
 
 class DaftarAbsenPage extends StatefulWidget {
   final ValueNotifier<List<AbsensiData>> absensiNotifier;
-  const DaftarAbsenPage({super.key, required this.absensiNotifier, required List absensi});
+  const DaftarAbsenPage({
+    super.key,
+    required this.absensiNotifier,
+    required List absensi,
+  });
 
   @override
   State<DaftarAbsenPage> createState() => _DaftarAbsenPageState();
@@ -23,6 +30,7 @@ class DaftarAbsenPage extends StatefulWidget {
 
 class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
   DateTime selectedMonth = DateTime.now();
+  StreamSubscription<QuerySnapshot>? _absenSub;
 
   List<AbsensiData> _filterForMonth(List<AbsensiData> all) => all
       .where(
@@ -94,6 +102,58 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _startAbsensiListener();
+  }
+
+  void _startAbsensiListener() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final col = FirebaseFirestore.instance
+        .collection('absensi')
+        .where('userId', isEqualTo: user.uid)
+        .orderBy('tanggal', descending: true);
+
+    _absenSub = col.snapshots().listen(
+      (snap) {
+        final items = snap.docs.map((doc) {
+          final data = doc.data();
+          // Support both Timestamp and String formats
+          DateTime parseDate(dynamic v) {
+            if (v == null) return DateTime.now();
+            if (v is Timestamp) return v.toDate();
+            if (v is String) return DateTime.tryParse(v) ?? DateTime.now();
+            return DateTime.now();
+          }
+
+          final tanggal = parseDate(data['tanggal']);
+          final jamMasuk = parseDate(
+            data['jam_masuk'] ?? data['jamMasuk'] ?? data['masuk'],
+          );
+          final jamPulang = parseDate(
+            data['jam_pulang'] ?? data['jamPulang'] ?? data['pulang'],
+          );
+
+          return AbsensiData(
+            tanggal: tanggal,
+            jamMasuk: jamMasuk,
+            jamPulang: jamPulang,
+          );
+        }).toList();
+
+        // update the notifier
+        widget.absensiNotifier.value = items;
+      },
+      onError: (e) {
+        // ignore errors silently for now
+        print('Error listening absensi: $e');
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     const biruAppbar = Color(0xFF3F7DF4);
     const surface = Color(0xFFF6F7FB);
@@ -102,14 +162,21 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
       backgroundColor: surface,
       body: Column(
         children: [
-          // HEADER BIRU PENUH
-          Container(
-            width: double.infinity,
-            height: 62,
-            color: biruAppbar,
-            padding: const EdgeInsets.only(left: 5, right: 15, top: 6),
-            child: SafeArea(
-              bottom: false,
+          // HEADER BIRU (SafeArea outside so header sits below status bar)
+          SafeArea(
+            top: true,
+            bottom: false,
+            child: Container(
+              width: double.infinity,
+              // slightly taller so it appears a bit lower visually
+              height: 80,
+              color: biruAppbar,
+              padding: const EdgeInsets.only(
+                left: 6,
+                right: 15,
+                top: 18,
+                bottom: 8,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -209,6 +276,25 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
               child: ValueListenableBuilder<List<AbsensiData>>(
                 valueListenable: widget.absensiNotifier,
                 builder: (context, allAbsensi, _) {
+                  // If absensiNotifier is empty, try to show loading indicator
+                  if (allAbsensi.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 12),
+                          const CircularProgressIndicator(
+                            color: Color(0xFF3F7DF4),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'Memuat data absen...',
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                   final filtered = _filterForMonth(allAbsensi);
                   if (filtered.isEmpty) {
                     return Container(
@@ -364,5 +450,11 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _absenSub?.cancel();
+    super.dispose();
   }
 }

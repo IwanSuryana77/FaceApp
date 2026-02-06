@@ -129,7 +129,8 @@ class _ProfilScreenState extends State<ProfilScreen>
                   // Enhanced Header with Glassmorphism Effect
                   SliverAppBar(
                     backgroundColor: Colors.transparent,
-                    expandedHeight: isMobile ? 280 : 320,
+                    // Slightly increased expandedHeight to avoid bottom overflow
+                    expandedHeight: isMobile ? 320 : 360,
                     floating: false,
                     pinned: true,
                     snap: false,
@@ -169,6 +170,7 @@ class _ProfilScreenState extends State<ProfilScreen>
                                 child: SlideTransition(
                                   position: _slideAnimation,
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       ScaleTransition(
                                         scale: _scaleAnimation,

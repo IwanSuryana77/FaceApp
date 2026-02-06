@@ -689,17 +689,19 @@ class _InfoPendidikanScreenState extends State<InfoPendidikanScreen>
             ),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildEnhancedSummaryItem(
-                  'S1',
-                  'Teknik Informatika',
-                  Icons.school,
-                  isMobile,
+                Expanded(
+                  child: _buildEnhancedSummaryItem(
+                    'S1',
+                    'Teknik Informatika',
+                    Icons.school,
+                    isMobile,
+                  ),
                 ),
                 Container(
                   height: 30,
                   width: 1,
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -712,10 +714,18 @@ class _InfoPendidikanScreenState extends State<InfoPendidikanScreen>
                     ),
                   ),
                 ),
-                _buildEnhancedSummaryItem('IPK', '3.99', Icons.star, isMobile),
+                Expanded(
+                  child: _buildEnhancedSummaryItem(
+                    'IPK',
+                    '3.99',
+                    Icons.star,
+                    isMobile,
+                  ),
+                ),
                 Container(
                   height: 30,
                   width: 1,
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -728,11 +738,13 @@ class _InfoPendidikanScreenState extends State<InfoPendidikanScreen>
                     ),
                   ),
                 ),
-                _buildEnhancedSummaryItem(
-                  'SKS',
-                  '144',
-                  Icons.list_alt,
-                  isMobile,
+                Expanded(
+                  child: _buildEnhancedSummaryItem(
+                    'SKS',
+                    '144',
+                    Icons.list_alt,
+                    isMobile,
+                  ),
                 ),
               ],
             ),

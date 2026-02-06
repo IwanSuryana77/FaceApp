@@ -17,17 +17,12 @@ class _PromoCarouselState extends State<PromoCarousel> {
       desc: 'Utamakan keselamatan dalam bekerja.',
     ),
     PromoModel(
-      imageAsset: 'assets/images/policy.jpg',
-      title: 'Pembaruan Kebijakan',
-      desc: 'Kebijakan baru efektif 1 September.',
-    ),
-    PromoModel(
-      imageAsset: 'assets/images/work.jpg',
+      imageAsset: 'assets/images/team.png',
       title: 'Produktivitas',
       desc: 'Bekerja dengan fokus penuh.',
     ),
     PromoModel(
-      imageAsset: 'assets/images/fokus.jpg',
+      imageAsset: 'assets/images/profit.png',
       title: 'Fokus',
       desc: 'Jaga fokus untuk hasil maksimal.',
     ),
@@ -70,7 +65,7 @@ class _PromoCarouselState extends State<PromoCarousel> {
     return Column(
       children: [
         SizedBox(
-          height: 200,
+          height: 220,
           child: PageView.builder(
             controller: _controller,
             onPageChanged: (index) {
@@ -88,7 +83,7 @@ class _PromoCarouselState extends State<PromoCarousel> {
             },
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 10),
         DotIndicator(currentIndex: _currentPage, count: _data.length),
       ],
     );

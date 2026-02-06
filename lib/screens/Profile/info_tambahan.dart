@@ -114,10 +114,15 @@ class _InfoTambahanScreenState extends State<InfoTambahanScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < 600;
-    final horizontalPadding = isMobile ? 20.0 : 32.0;
-    final expandedHeight = isMobile ? 180.0 : 220.0;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final bool isMobile = screenWidth < 600;
+    final double horizontalPadding = isMobile ? 20.0 : 32.0;
+
+    // Calculate expandedHeight as a percentage of screen height, then clamp
+    final double percent = isMobile ? 0.28 : 0.22;
+    final double expandedHeight =
+        (screenHeight * percent).clamp(220.0, 420.0) as double;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -198,7 +203,8 @@ class _InfoTambahanScreenState extends State<InfoTambahanScreen>
                         padding: EdgeInsets.only(
                           left: horizontalPadding,
                           right: horizontalPadding,
-                          top: kToolbarHeight + 40,
+                          // reduce extra top offset and rely on larger expandedHeight
+                          top: kToolbarHeight + 20,
                           bottom: 20,
                         ),
                         child: Column(

@@ -50,6 +50,7 @@ dependencies:
   google_mlkit_face_detection: ^0.13.1
   google_ml_kit: ^0.20.0
   permission_handler: ^11.0.1
+  path_provider: ^2.1.2
 
   # Localization
   flutter_localizations:
@@ -66,15 +67,12 @@ flutter:
 
   assets:
     - assets/images/Kalender.jpg
-    - assets/images/selipgaji.jpg
     - assets/images/daftarabsen.jpg
     - assets/images/JamLembur.jpg
-    - assets/images/Reimbursment.jpg
-    - assets/images/FaceKamera.jpg
     - assets/images/header.jpg
     - assets/images/safety.jpg
-    - assets/images/work.jpg
-    - assets/images/fokus.jpg
+    - assets/images/team.png
+    - assets/images/profit.png
     - assets/images/profil.jpg
     - assets/images/bitmap.bmp
     - assets/images/logo.png

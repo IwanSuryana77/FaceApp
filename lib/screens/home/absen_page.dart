@@ -103,7 +103,7 @@ class AbsensiDashboardPage extends StatelessWidget {
                                           builder: (_) => FaceVerificationPage(
                                             userId: userId,
                                             isCheckOut: false,
-                                            today: today,
+                                            today: today, userName: '',
                                           ),
                                         ),
                                       );
@@ -127,7 +127,7 @@ class AbsensiDashboardPage extends StatelessWidget {
                                           builder: (_) => FaceVerificationPage(
                                             userId: userId,
                                             isCheckOut: true,
-                                            today: today,
+                                            today: today, userName: '',
                                           ),
                                         ),
                                       );

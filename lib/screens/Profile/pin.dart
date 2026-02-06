@@ -399,82 +399,111 @@ class _PinPageState extends State<PinPage> with SingleTickerProviderStateMixin {
                           margin: const EdgeInsets.only(bottom: 40),
                           child: Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(6, (index) {
-                                  return AnimatedContainer(
-                                    duration: const Duration(milliseconds: 200),
-                                    width: isSmallScreen ? 36 : 44,
-                                    height: isSmallScreen ? 36 : 44,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: isSmallScreen ? 4 : 8,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: index < _currentIndex
-                                          ? const LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [
-                                                Color(0xFF7C3AED),
-                                                Color(0xFF5B21B6),
-                                              ],
-                                            )
-                                          : null,
-                                      color: index < _currentIndex
-                                          ? null
-                                          : Colors.white,
-                                      border: Border.all(
-                                        color: index < _currentIndex
-                                            ? const Color(0xFF7C3AED)
-                                            : Colors.grey.shade300,
-                                        width: index < _currentIndex ? 2 : 1.5,
-                                      ),
-                                      boxShadow: [
-                                        if (index < _currentIndex)
-                                          BoxShadow(
-                                            color: const Color(
-                                              0xFF7C3AED,
-                                            ).withOpacity(0.3),
-                                            blurRadius: 10,
-                                            spreadRadius: 1,
+                              LayoutBuilder(
+                                builder: (context, boxConstraints) {
+                                  final available = boxConstraints.maxWidth;
+                                  // spacing between boxes
+                                  final spacing = isSmallScreen ? 8.0 : 12.0;
+                                  final totalSpacing = spacing * (6 - 1);
+                                  final minBox = isSmallScreen ? 34.0 : 40.0;
+                                  final maxBox = isSmallScreen ? 44.0 : 56.0;
+                                  double boxSize =
+                                      (available - totalSpacing) / 6.0;
+                                  if (boxSize > maxBox) boxSize = maxBox;
+                                  if (boxSize < minBox) boxSize = minBox;
+
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: List.generate(6, (index) {
+                                      return Container(
+                                        width: boxSize,
+                                        height: boxSize,
+                                        margin: EdgeInsets.only(
+                                          right: index == 5 ? 0 : spacing,
+                                        ),
+                                        child: AnimatedContainer(
+                                          duration: const Duration(
+                                            milliseconds: 200,
                                           ),
-                                        BoxShadow(
-                                          color: Colors.white.withOpacity(0.8),
-                                          blurRadius: 5,
-                                          spreadRadius: 2,
-                                          offset: const Offset(-2, -2),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            gradient: index < _currentIndex
+                                                ? const LinearGradient(
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                    colors: [
+                                                      Color(0xFF7C3AED),
+                                                      Color(0xFF5B21B6),
+                                                    ],
+                                                  )
+                                                : null,
+                                            color: index < _currentIndex
+                                                ? null
+                                                : Colors.white,
+                                            border: Border.all(
+                                              color: index < _currentIndex
+                                                  ? const Color(0xFF7C3AED)
+                                                  : Colors.grey.shade300,
+                                              width: index < _currentIndex
+                                                  ? 2
+                                                  : 1.5,
+                                            ),
+                                            boxShadow: [
+                                              if (index < _currentIndex)
+                                                BoxShadow(
+                                                  color: const Color(
+                                                    0xFF7C3AED,
+                                                  ).withOpacity(0.3),
+                                                  blurRadius: 10,
+                                                  spreadRadius: 1,
+                                                ),
+                                              BoxShadow(
+                                                color: Colors.white.withOpacity(
+                                                  0.8,
+                                                ),
+                                                blurRadius: 5,
+                                                spreadRadius: 2,
+                                                offset: const Offset(-2, -2),
+                                              ),
+                                              BoxShadow(
+                                                color: Colors.black.withOpacity(
+                                                  0.05,
+                                                ),
+                                                blurRadius: 5,
+                                                spreadRadius: 1,
+                                                offset: const Offset(2, 2),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Center(
+                                            child: AnimatedSwitcher(
+                                              duration: const Duration(
+                                                milliseconds: 200,
+                                              ),
+                                              transitionBuilder:
+                                                  (child, animation) {
+                                                    return ScaleTransition(
+                                                      scale: animation,
+                                                      child: child,
+                                                    );
+                                                  },
+                                              child:
+                                                  _pinDigits[index].isNotEmpty
+                                                  ? const Icon(
+                                                      Icons.circle_rounded,
+                                                      size: 14,
+                                                      color: Colors.white,
+                                                    )
+                                                  : const SizedBox.shrink(),
+                                            ),
+                                          ),
                                         ),
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 5,
-                                          spreadRadius: 1,
-                                          offset: const Offset(2, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Center(
-                                      child: AnimatedSwitcher(
-                                        duration: const Duration(
-                                          milliseconds: 200,
-                                        ),
-                                        transitionBuilder: (child, animation) {
-                                          return ScaleTransition(
-                                            scale: animation,
-                                            child: child,
-                                          );
-                                        },
-                                        child: _pinDigits[index].isNotEmpty
-                                            ? const Icon(
-                                                Icons.circle_rounded,
-                                                size: 14,
-                                                color: Colors.white,
-                                              )
-                                            : const SizedBox.shrink(),
-                                      ),
-                                    ),
+                                      );
+                                    }),
                                   );
-                                }),
+                                },
                               ),
                               const SizedBox(height: 12),
                               Text(

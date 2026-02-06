@@ -33,7 +33,7 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
           "Tunjangan Lain-lain": 50000,
           "Potongan BPJS": -50000,
           "Potongan Pajak": -50000,
-        }
+        },
       };
     });
     expandedIndex = null;
@@ -45,14 +45,20 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // ---------- HEADER BOX BIRU  ----------
-          Container(
-            width: double.infinity,
-            height: 70,
-            color: biruTua,
-            padding: const EdgeInsets.only(left: 5, right: 15, top: 8, bottom: 4),
-            child: SafeArea(
-              bottom: false,
+          // ---------- HEADER BOX BIRU (safe from status bar) ----------
+          SafeArea(
+            top: true,
+            bottom: false,
+            child: Container(
+              width: double.infinity,
+              height: 84,
+              color: biruTua,
+              padding: const EdgeInsets.only(
+                left: 5,
+                right: 15,
+                top: 20,
+                bottom: 4,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -72,7 +78,10 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.download_outlined, color: Colors.white),
+                    icon: const Icon(
+                      Icons.download_outlined,
+                      color: Colors.white,
+                    ),
                     onPressed: () {},
                   ),
                   IconButton(
@@ -108,14 +117,21 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                               width: expanded ? 2.2 : 1.1,
                             ),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 13),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 13,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Row bulan, status, tombol lihat
                               Row(
                                 children: [
-                                  const Icon(Icons.calendar_month_outlined, color: Color(0xFF0250A5), size: 22),
+                                  const Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: Color(0xFF0250A5),
+                                    size: 22,
+                                  ),
                                   const SizedBox(width: 7),
                                   Text(
                                     slip["bulan"],
@@ -128,10 +144,15 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                                   const Spacer(),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color: slip["status"] == "Terbayar" ? hijau : Colors.amber,
+                                      color: slip["status"] == "Terbayar"
+                                          ? hijau
+                                          : Colors.amber,
                                       borderRadius: BorderRadius.circular(19),
                                     ),
-                                    padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 13,
+                                      vertical: 5,
+                                    ),
                                     child: Text(
                                       slip["status"],
                                       style: const TextStyle(
@@ -144,19 +165,33 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                                   const SizedBox(width: 8),
                                   ElevatedButton.icon(
                                     onPressed: () {
-                                      setState(() => expandedIndex = expanded ? null : i);
+                                      setState(
+                                        () =>
+                                            expandedIndex = expanded ? null : i,
+                                      );
                                     },
-                                    icon: const Icon(Icons.visibility, size: 17),
-                                    label: const Text("Lihat", style: TextStyle(fontWeight: FontWeight.w700)),
+                                    icon: const Icon(
+                                      Icons.visibility,
+                                      size: 17,
+                                    ),
+                                    label: const Text(
+                                      "Lihat",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: biruTua,
                                       foregroundColor: Colors.white,
                                       elevation: 0,
-                                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 1),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 15,
+                                        vertical: 1,
+                                      ),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(9),
                                       ),
-                                      minimumSize: const Size(0,34),
+                                      minimumSize: const Size(0, 34),
                                     ),
                                   ),
                                 ],
@@ -164,11 +199,21 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                               const SizedBox(height: 2),
                               Row(
                                 children: [
-                                  const Text("Gaji Bersih", style: TextStyle(fontSize: 14.1, color: Colors.black54, fontWeight: FontWeight.w500)),
+                                  const Text(
+                                    "Gaji Bersih",
+                                    style: TextStyle(
+                                      fontSize: 14.1,
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                   const SizedBox(width: 9),
                                   Text(
-                                    NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0)
-                                        .format(slip["nominal"] ?? 0),
+                                    NumberFormat.currency(
+                                      locale: 'id_ID',
+                                      symbol: 'Rp ',
+                                      decimalDigits: 0,
+                                    ).format(slip["nominal"] ?? 0),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17,
@@ -253,7 +298,11 @@ class _GajiDetailBox extends StatelessWidget {
               const Spacer(),
               Text(
                 bulanTahun,
-                style: const TextStyle(color: biruTua, fontWeight: FontWeight.w600, fontSize: 15),
+                style: const TextStyle(
+                  color: biruTua,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
               ),
             ],
           ),
@@ -261,35 +310,39 @@ class _GajiDetailBox extends StatelessWidget {
           const Divider(height: 20, color: biruTua),
           const Text("Rincian Pendapatan", style: isi),
           const SizedBox(height: 3),
-          ...detail.entries.map((e) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.6),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        e.key,
-                        style: isi.copyWith(
-                          color: (e.value < 0)
-                              ? Colors.red
-                              : isi.color,
-                          fontWeight: (e.key.startsWith('Potongan')) ? FontWeight.w600 : FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      NumberFormat.currency(
-                        locale: 'id_ID',
-                        symbol: e.value < 0 ? "- Rp " : "Rp ",
-                        decimalDigits: 0,
-                      ).format(e.value.abs()),
+          ...detail.entries.map(
+            (e) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 1.6),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      e.key,
                       style: isi.copyWith(
                         color: (e.value < 0) ? Colors.red : isi.color,
-                        fontWeight: (e.key.startsWith('Potongan')) ? FontWeight.w600 : FontWeight.w400,
+                        fontWeight: (e.key.startsWith('Potongan'))
+                            ? FontWeight.w600
+                            : FontWeight.w400,
                       ),
                     ),
-                  ],
-                ),
-              )),
+                  ),
+                  Text(
+                    NumberFormat.currency(
+                      locale: 'id_ID',
+                      symbol: e.value < 0 ? "- Rp " : "Rp ",
+                      decimalDigits: 0,
+                    ).format(e.value.abs()),
+                    style: isi.copyWith(
+                      color: (e.value < 0) ? Colors.red : isi.color,
+                      fontWeight: (e.key.startsWith('Potongan'))
+                          ? FontWeight.w600
+                          : FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 5),
           const Divider(),
           Row(
@@ -305,8 +358,11 @@ class _GajiDetailBox extends StatelessWidget {
                 ),
               ),
               Text(
-                NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0)
-                    .format(gajiBersih),
+                NumberFormat.currency(
+                  locale: 'id_ID',
+                  symbol: 'Rp ',
+                  decimalDigits: 0,
+                ).format(gajiBersih),
                 style: const TextStyle(
                   color: biruTua,
                   fontWeight: FontWeight.bold,

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 class UploadService {
-  static const String cloudName = 'CLOUD_NAME_KAMU';
+  static const String cloudName = 'dv8zwl76d';
   static const String uploadPreset = 'facesign_unsigned';
 
   static Future<String?> uploadToCloudinary(Uint8List imageBytes) async {
@@ -24,10 +24,12 @@ class UploadService {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      final resData =
-          json.decode(await response.stream.bytesToString());
+      final resData = json.decode(await response.stream.bytesToString());
       return resData['secure_url'];
     } else {
+      print(
+        "Cloudinary upload failed: ${response.statusCode} ${await response.stream.bytesToString()}",
+      );
       return null;
     }
   }
