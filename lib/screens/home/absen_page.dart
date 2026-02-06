@@ -21,14 +21,21 @@ class AbsensiDashboardPage extends StatelessWidget {
         .snapshots();
 
     return Scaffold(
-      backgroundColor: Color(0xFFF7F8FA),
-      appBar: AppBar(
-        title: const Text('Absensi'),
-        backgroundColor: primaryPurple,
-        foregroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0,
-      ),
+    backgroundColor: Color(0xFFF7F8FA),
+    appBar: AppBar(
+    centerTitle: true,
+    title: const Text(
+    'Absensi',
+    style: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    textAlign: TextAlign.center,
+  ),
+  backgroundColor: primaryPurple,
+  foregroundColor: Colors.white,
+  elevation: 0,
+),
       body: ListView(
         padding: const EdgeInsets.all(19),
         children: [
@@ -77,7 +84,7 @@ class AbsensiDashboardPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   const Text(
-                    'Jam Normal: 08:00 - 17:00',
+                    'Jam Normal: 08:00 - 16:00',
                     style: TextStyle(color: Colors.black54, fontSize: 14),
                   ),
                   const SizedBox(height: 13),

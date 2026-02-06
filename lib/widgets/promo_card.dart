@@ -34,19 +34,17 @@ class _PromoCarouselState extends State<PromoCarousel> {
   @override
   void initState() {
     super.initState();
-    _startAutoScroll();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startAutoScroll());
   }
 
   void _startAutoScroll() {
-    // Use a slightly longer periodic interval than the animation
-    // duration to avoid overlapping animations.
-    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (_controller.hasClients) {
         final nextPage = (_currentPage + 1) % _data.length;
         _controller.animateToPage(
           nextPage,
-          // Animation duration set to 3 seconds as requested
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 3), // ANIMASI SELAMA 3 DETIK
           curve: Curves.easeInOut,
         );
       }

@@ -9,7 +9,7 @@ class SlipGajiPage extends StatefulWidget {
 }
 
 class _SlipGajiPageState extends State<SlipGajiPage> {
-  final Color biruTua = const Color(0xFF0044FF);
+  final Color biruTua = const Color(0xFF3F7DF4);
   final Color hijau = const Color(0xFF18BB47);
   final Color tileBg = const Color(0xFFE5F1FC);
 
@@ -56,7 +56,7 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
               padding: const EdgeInsets.only(
                 left: 5,
                 right: 15,
-                top: 20,
+                top: 12, // <-- DIKURANGI supaya header naik
                 bottom: 4,
               ),
               child: Row(
@@ -66,17 +66,19 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  const SizedBox(width: 6),
-                  const Text(
-                    'Slip Gaji',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                      letterSpacing: 0.2,
+                  Expanded(
+                    child: Center(
+                      child: const Text(
+                        'Slip Gaji',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   IconButton(
                     icon: const Icon(
                       Icons.download_outlined,
@@ -166,8 +168,7 @@ class _SlipGajiPageState extends State<SlipGajiPage> {
                                   ElevatedButton.icon(
                                     onPressed: () {
                                       setState(
-                                        () =>
-                                            expandedIndex = expanded ? null : i,
+                                        () => expandedIndex = expanded ? null : i,
                                       );
                                     },
                                     icon: const Icon(
@@ -262,7 +263,7 @@ class _GajiDetailBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const biruTua = Color(0xFF0044FF);
+    const biruTua = Color(0xFF3F7DF4);
     const judul = TextStyle(
       fontWeight: FontWeight.w700,
       color: biruTua,

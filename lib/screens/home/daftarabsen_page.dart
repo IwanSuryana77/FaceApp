@@ -143,11 +143,9 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
           );
         }).toList();
 
-        // update the notifier
         widget.absensiNotifier.value = items;
       },
       onError: (e) {
-        // ignore errors silently for now
         print('Error listening absensi: $e');
       },
     );
@@ -162,19 +160,18 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
       backgroundColor: surface,
       body: Column(
         children: [
-          // HEADER BIRU (SafeArea outside so header sits below status bar)
+          // HEADER BIRU (dengan SafeArea dan sedikit naik ke atas)
           SafeArea(
             top: true,
             bottom: false,
             child: Container(
               width: double.infinity,
-              // slightly taller so it appears a bit lower visually
-              height: 80,
+              height: 84, // Lebih tinggi, sedikit ke atas
               color: biruAppbar,
               padding: const EdgeInsets.only(
                 left: 6,
                 right: 15,
-                top: 18,
+                top: 4,   // Top padding sedikit, biar nempel
                 bottom: 8,
               ),
               child: Row(
@@ -190,15 +187,14 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
-                      fontSize: 20.5,
+                      fontSize: 20,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-
-          // === FILTER BULAN / TAHUN ===
+          // FILTER BULAN / TAHUN
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 9),
             child: Row(
@@ -276,7 +272,6 @@ class _DaftarAbsenPageState extends State<DaftarAbsenPage> {
               child: ValueListenableBuilder<List<AbsensiData>>(
                 valueListenable: widget.absensiNotifier,
                 builder: (context, allAbsensi, _) {
-                  // If absensiNotifier is empty, try to show loading indicator
                   if (allAbsensi.isEmpty) {
                     return Center(
                       child: Column(

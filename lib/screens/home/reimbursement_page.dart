@@ -131,11 +131,18 @@ class _ReimbursementPageState extends State<ReimbursementPage> {
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
-        title: const Text('Reimbursement'),
-        backgroundColor: primaryBlue,
-        foregroundColor: Colors.white,
-        elevation: 0,
-      ),
+          centerTitle: true,
+          title: const Text('Reimbursement',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          backgroundColor: primaryBlue,
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

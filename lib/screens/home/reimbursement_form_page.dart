@@ -205,11 +205,19 @@ class _ReimbursementFormPageState extends State<ReimbursementFormPage> {
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
-        title: const Text('Pengajuan Reimbursement'),
-        backgroundColor: Color(0xFF3F7DF4),
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
+       centerTitle: true,
+      title: const Text(
+      'Pengajuan Reimbursement',
+      style: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    textAlign: TextAlign.center,
+  ),
+  backgroundColor: Color(0xFF3F7DF4),
+  foregroundColor: Colors.black,
+  elevation: 0,
+),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 500),

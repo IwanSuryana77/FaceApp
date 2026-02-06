@@ -107,7 +107,7 @@ class _LemburPageState extends State<LemburPage> {
         'alasan': alasan,
         'lampiran_urls': uploadedUrls,
         'created_at': FieldValue.serverTimestamp(),
-        'status': 'Menunggu Persetujuan Atasan',
+        'status': 'Menunggu Persetujuan',
       };
       final ref = await FirebaseFirestore.instance.collection('lembur').add(newSubmission);
       setState(() {
@@ -139,11 +139,19 @@ class _LemburPageState extends State<LemburPage> {
     return Scaffold(
       backgroundColor: lightGrey,
       appBar: AppBar(
-        title: const Text('Lembur'),
-        backgroundColor: Color(0xFF3F7DF4),
-        elevation: 0,
-        foregroundColor: Colors.black,
-      ),
+      centerTitle: true,
+      title: const Text(
+      'Lembur',
+     style: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+    ),
+    textAlign: TextAlign.center,
+  ),
+  backgroundColor: Color(0xFF3F7DF4),
+  elevation: 0,
+  foregroundColor: Colors.black,
+),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Center(
