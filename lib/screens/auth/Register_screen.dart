@@ -205,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         (route) => false,
       );
     } catch (e) {
-      print('❌ Error auto login after register: $e');
+      print('Error auto login after register: $e');
       if (mounted) {
         // Tetap arahkan ke login screen
         Navigator.pushAndRemoveUntil(
