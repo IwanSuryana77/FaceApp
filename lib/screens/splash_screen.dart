@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   // Untuk mengontrol animasi teks satu per satu
   int _visibleChars = 0;
-  final String _appName = 'FaceApp';
+  final String _appName = 'Presence App';
   Timer? _timer;
   double _logoScale = 0.4;
 
