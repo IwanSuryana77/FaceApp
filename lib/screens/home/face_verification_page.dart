@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 const faceVerificationApiEndpoint =
     'https://amare-homochrome-gamogenetically.ngrok-free.dev/face_verification';
 const cloudinaryPhotoUrl =
-    'https://res.cloudinary.com/dqu4sucua/image/upload/v1770352021/selfi_o7x3nq.jpg';
+    'https://res.cloudinary.com/dqu4sucua/image/upload/v1770428233/sc_haudi_o0eee0.jpg';
 const primaryPurple = Color(0xFF3F7DF4);
 
 class FaceVerificationPage extends StatefulWidget {

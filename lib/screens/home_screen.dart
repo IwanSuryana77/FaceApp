@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text('Email: $userEmail', style: const TextStyle(fontSize: 16)),
-            // Tambahkan widget profile lainnya di sini
+            
           ],
         ),
       ),

@@ -391,7 +391,7 @@ class _InfoPayrollScreenState extends State<InfoPayrollScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Surya Ramadhan',
+                              'Haudi Agusti H',
                               style: TextStyle(
                                 fontSize: isMobile ? 20 : 22,
                                 fontWeight: FontWeight.bold,

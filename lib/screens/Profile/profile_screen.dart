@@ -597,7 +597,7 @@ class _ProfilScreenState extends State<ProfilScreen>
                 ],
               ),
               child: Image.asset(
-                'assets/images/profil.jpg',
+                'assets/images/profile.jpeg',
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -637,7 +637,7 @@ class _ProfilScreenState extends State<ProfilScreen>
             ).createShader(bounds);
           },
           child: Text(
-            'Hello, Leonardo Dicaprio',
+            'Hello, Haudi Agusti H',
             style: TextStyle(
               fontSize: isMobile ? 22 : 26,
               fontWeight: FontWeight.bold,

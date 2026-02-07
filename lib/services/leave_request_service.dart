@@ -60,8 +60,8 @@ class LeaveRequestService {
     }
   }
 
-  /// Ambil permintaan cuti berdasarkan ID
-  /// FIREBASE READ: Get dokumen spesifik
+  // Ambil permintaan cuti berdasarkan ID
+  // FIREBASE READ: Get dokumen spesifik
   Future<LeaveRequest?> getLeaveRequestById(String id) async {
     try {
       final doc = await _firestore.collection(_collectionName).doc(id).get();

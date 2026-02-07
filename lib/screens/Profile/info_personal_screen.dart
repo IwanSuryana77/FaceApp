@@ -22,14 +22,14 @@ class _InfoPersonalScreenState extends State<InfoPersonalScreen>
 
   // Data dinamis!
   Map<String, String> _dataPersonal = {
-    'Nama Lengkap': 'Leonardo .D. Caprio',
+    'Nama Lengkap': 'Haudi Agusti H',
     'Tempat Lahir': 'Bekasi',
     'Tanggal Lahir': '30 Oktober 2004',
-    'Jenis Kelamin': 'Laki-laki',
+    'Jenis Kelamin': 'Perempuan',
     'Agama': 'Islam',
   };
   Map<String, String> _dataContact = {
-    'Email Utama': 'Leonard1.com',
+    'Email Utama': 'haudi@example.com',
     'Nomor HP': '0812-3456-7890',
     'Alamat': 'Jl. Didiparawirakusumah No. 123',
     'Kota': 'Kota Bandung',

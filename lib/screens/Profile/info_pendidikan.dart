@@ -568,7 +568,7 @@ class _InfoPendidikanScreenState extends State<InfoPendidikanScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Leonardo Dicaprio',
+                          'Haudi Agusti H',
                           style: TextStyle(
                             fontSize: isMobile ? 20 : 22,
                             fontWeight: FontWeight.bold,

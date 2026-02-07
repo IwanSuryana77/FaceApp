@@ -546,7 +546,7 @@ class _InfoKeluargaScreenState extends State<InfoKeluargaScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Surya Ramadhan',
+                              'Haudi Agusti H',
                               style: TextStyle(
                                 fontSize: isMobile ? 18 : 22,
                                 fontWeight: FontWeight.bold,
